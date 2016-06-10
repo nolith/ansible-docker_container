@@ -1,7 +1,9 @@
 ---
 - hosts: localhost
   remote_user: root
-  roles:
-    - role: docker_container
-      container_name: test
-      docker_image: quay.io/nolith/test
+  # roles:
+  #   - role: docker_container
+  #     container_name: test
+  #     docker_image: quay.io/nolith/test
+  tasks:
+    - debug: msg="System {{ inventory_hostname }} has uuid {{ ansible_product_uuid }}"
