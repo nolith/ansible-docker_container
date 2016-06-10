@@ -1,0 +1,4 @@
+---
+- name: copy service definition - upstart
+  template: src={{ upstart_template }} dest=/etc/init/{{ container_name }}.conf
+  register: service_file

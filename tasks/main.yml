@@ -1,0 +1,11 @@
+---
+- include: upstart.yml
+  when: ansible_distribution == "Ubuntu" and ansible_distribution_major_version|int <= 14
+
+- name: restart service
+  service: name={{ container_name }} state=restarted
+  when: start_service and service_file.changed
+
+- name: enable service
+  service: name={{ container_name }} state=started enabled={{ enable_service }}
+  when: start_service

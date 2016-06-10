@@ -1,0 +1,29 @@
+description "container {{ container_name }}"
+author "{{ author | default('nolith.docker_container ansible role')}}"
+start on filesystem and started docker
+stop on runlevel [!2345]
+respawn
+
+pre-start script
+  /usr/bin/docker kill {{ container_name }} || true
+  /usr/bin/docker rm {{ container_name }} || true
+  /usr/bin/docker pull {{ docker_image }} || true
+end script
+
+exec /usr/bin/docker run --name {{ container_name }} \
+{% for env in environments | default([]) %}
+  -e {{ env }} \
+{% endfor %}
+{% for link in links | default([]) %}
+  --link {{ link }} \
+{% endfor %}
+{% for volume in volumes | default([]) %}
+  -v {{ volume }} \
+{% endfor %}
+{% for port in ports | default([]) %}
+  -p {{ port }} \
+{% endfor %}
+{% for param in docker_additional_params | default([]) %}
+  {{ param }} \
+{% endfor %}
+  {{ docker_image }} {{container_command | default('')}}

@@ -1,0 +1,4 @@
+---
+upstart_template: upstart.conf.j2
+enable_service: yes
+start_service: True
