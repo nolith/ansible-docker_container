@@ -1,0 +1,7 @@
+---
+- hosts: localhost
+  remote_user: root
+  roles:
+    - role: docker_container
+      container_name: test
+      docker_image: quay.io/nolith/test
