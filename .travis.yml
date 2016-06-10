@@ -24,8 +24,8 @@ install:
 script:
   - docker pull nolith/ansible-test:ubuntu_14.04
   - docker run -d --name ansible -v `pwd`:/data nolith/ansible-test:ubuntu_14.04
-  - docker exec -it /bin/sh -c "ansible-playbook /data/tests/test.yml -i /data/tests/inventory --syntax-check"
-
+  - docker exec -it ansible /bin/sh -c "ansible-playbook /data/tests/test.yml -i /data/tests/inventory --syntax-check -c local"
+  - docker exec -it ansible /bin/sh -c "ansible-playbook /data/tests/test.yml -i /data/tests/inventory -c local"
 
 notifications:
   webhooks: https://galaxy.ansible.com/api/v1/notifications/
