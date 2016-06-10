@@ -23,7 +23,7 @@ install:
 
 script:
   - docker pull nolith/ansible-test:ubuntu_14.04
-  - docker run -d --name ansible `pwd`:/data nolith/ansible-test:ubuntu_14.04
+  - docker run -d --name ansible -v `pwd`:/data nolith/ansible-test:ubuntu_14.04
   - docker exec -it /bin/sh -c "ansible-playbook /data/tests/test.yml -i /data/tests/inventory --syntax-check"
 
 
