@@ -12,4 +12,8 @@
   tasks:
     - debug: msg="System {{ inventory_hostname }}"
     - debug: var={{hostvars}}
+    - command: docker ps
+    - pause: seconds=30
+    - command: docker ps
+    - command: docker logs httpbin
     - uri: url=http://localhost:8000/get
