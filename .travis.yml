@@ -1,31 +1,20 @@
 ---
-language: python
-python: "2.7"
+language: generic
 
 sudo: required
 
 services:
   - docker
 
-# Install ansible
-# addons:
-#   apt:
-#     packages:
-#     - python-pip
-
 install:
-  # Check ansible version
-  # - ansible --version
-  # Check docker version
   - docker --version
-  # Create ansible.cfg with correct roles_path
-  #- printf '[defaults]\nroles_path=../' >ansible.cfg
+
+env:
+  - IMAGE="nolith/ansible-test" VERSION="ubuntu_14.04"
+  - IMAGE="nolith/ansible-test" VERSION="ubuntu_12.04"
 
 script:
-  - docker pull nolith/ansible-test:ubuntu_14.04
-  - docker run -d --name ansible -v `pwd`:/data nolith/ansible-test:ubuntu_14.04
-  - docker exec -it ansible /bin/sh -c "ansible-playbook /data/tests/test.yml -i /data/tests/inventory --syntax-check -c local"
-  - docker exec -it ansible /bin/sh -c "ansible-playbook /data/tests/test.yml -i /data/tests/inventory -c local"
+  - ./tests/utils/run_test.sh
 
 notifications:
   webhooks: https://galaxy.ansible.com/api/v1/notifications/
