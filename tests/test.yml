@@ -8,7 +8,7 @@
       container_name: httpbin
       docker_image: citizenstig/httpbin
       ports:
-        - 8000
+        - 8000:8000
   tasks:
     - debug: msg="System {{ inventory_hostname }}"
     - debug: var={{hostvars}}
