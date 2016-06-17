@@ -10,8 +10,8 @@ install:
   - docker --version
 
 env:
-  - IMAGE="nolith/ansible-test" VERSION="ubuntu_14.04"
-  - IMAGE="nolith/ansible-test" VERSION="ubuntu_12.04"
+  - IMAGE="quay.io/nolith/ansible-dind" VERSION="ubuntu_14.04"
+  - IMAGE="quay.io/nolith/ansible-dind" VERSION="ubuntu_12.04"
 
 script:
   - ./tests/utils/run_test.sh

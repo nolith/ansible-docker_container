@@ -2,18 +2,23 @@
 - hosts: all
   become: yes
   become_method: sudo
+  tasks:
+    - docker_image: name=citizenstig/httpbin
+
+- hosts: all
+  become: yes
+  become_method: sudo
   roles:
-    - role: nolith.docker
     - role: nolith.docker_container
       container_name: httpbin
       docker_image: citizenstig/httpbin
       ports:
         - 8000:8000
   tasks:
-    - debug: msg="System {{ inventory_hostname }}"
-    - debug: var={{hostvars}}
+    - pause: seconds=10
+    - command: cat /etc/init/httpbin.conf
     - command: docker ps
-    - pause: seconds=30
-    - command: docker ps
+    - command: cat /var/log/upstart/httpbin.log
+      failed_when: False
     - command: docker logs httpbin
     - uri: url=http://localhost:8000/get
