@@ -5,7 +5,9 @@
 - name: restart service
   service: name={{ container_name }} state=restarted
   when: start_service and service_file.changed
+  tags: [ start-services ]
 
 - name: enable service
   service: name={{ container_name }} state=started enabled={{ enable_service }}
   when: start_service
+  tags: [ start-services ]
